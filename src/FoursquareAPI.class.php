@@ -14,10 +14,6 @@
   
   use \Exception;
 
-  // HTTP Methods
-  DEFINE("HTTP_GET","GET");
-  DEFINE("HTTP_POST","POST");
-
   /**
    * FoursquareApi
    * Provides a wrapper for making both public and authenticated requests to the
@@ -92,7 +88,7 @@
       $this->ClientSecret   = $client_secret;
       $this->ClientLanguage = $language;
       $this->RedirectUri    = $redirect_uri;
-      $this->debug = $debug;
+      $this->debug          = $debug;
 	}
     
     /**
