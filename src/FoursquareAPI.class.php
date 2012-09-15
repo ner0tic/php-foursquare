@@ -10,7 +10,7 @@
  * @license GPLv3 <http://www.gnu.org/licenses/gpl.txt>
  */
 
-  namespace Foursquare; // Foursquare\Api;
+  namespace FoursquareApi;
   
   use \Exception;
 
@@ -41,7 +41,7 @@
      * @var String $Version YYYYMMDD 
      * @author Petr Babicka (babcca@gmail.com), https://developer.foursquare.com/overview/versioning
      */
-	private $Version = '20120228'; 
+	private $Version = '20120913'; 
 
 	/** 
      * @var String $ClientID 
@@ -119,7 +119,7 @@
       $params['locale']         = $this->ClientLanguage;
 		
       // Return the result;
-      return $this->GET($url,$params);
+      return $this->get($url,$params);
 	}
 	
 	/** 
@@ -139,8 +139,8 @@
       $params['locale'] = $this->ClientLanguage;
       
       // Return the result.
-      if(!$POST) return $this->GET($url,$params);
-      else return $this->POST($url,$params);
+      if(!$POST) return $this->get($url,$params);
+      else return $this->post($url,$params);
 	}
 
 	/**
@@ -172,8 +172,8 @@
         }
         $params['requests'] = implode(',', $request_queries);
       }
-      if(!$POST) return $this->GET($url,$params);
-      else return $this->POST($url,$params);
+      if(!$POST) return $this->get($url,$params);
+      else return $this->post($url,$params);
 	}
     
     /**
@@ -243,18 +243,18 @@
 	}
 
 	/**
-	 * GET
+	 * Get
 	 * Abstraction of the GET request
 	 */
-	private function GET($url, $params = false) {
+	private function get($url, $params = false) {
       return $this->Request($url, $params, HTTP_GET);
 	}
 
 	/**
 	 * POST
-	 * Abstraction of a POST request
+	 * Abstraction of a post request
 	 */
-	private function POST($url, $params = false){
+	private function post($url, $params = false){
       return $this->Request($url, $params, HTTP_POST);
 	}
 
@@ -271,7 +271,7 @@
 	public function GeoLocate($addr) {
       $geoapi = "http://maps.googleapis.com/maps/api/geocode/json";
       $params = array("address" => $addr, "sensor" => "false");
-      $json = $this->getResponseFromJsonString($this->GET($geoapi, $params));
+      $json = $this->getResponseFromJsonString($this->get($geoapi, $params));
 
       $json = json_decode($response);
       if($json === null)
@@ -340,7 +340,7 @@
                       "grant_type"=>"authorization_code",
                       "redirect_uri"=>$redirect,
                       "code"=>$code);
-      $json = json_decode($this->GET($this->TokenUrl, $params));
+      $json = json_decode($this->get($this->TokenUrl, $params));
 		
       /**
        * @author Petr Babicka
